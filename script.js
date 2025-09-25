@@ -109,7 +109,7 @@ startButton.addEventListener("click", () => {
 
 // Daten an Google Sheet senden
 async function sendToGoogleSheet() {
-    const scriptUrl = "DEIN_GOOGLE_APPS_SCRIPT_URL";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbyTCL0-krlTlEPhn_N2wLW3OC5U1rvPlxpmLt2t-zOviCem8P4paJmFolfUa9wywwc/exec";
     const data = {
         team: teamName,
         attempts: attempts,
