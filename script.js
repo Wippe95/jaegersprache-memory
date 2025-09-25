@@ -46,27 +46,12 @@ function createCards() {
     const uniqueIds = [...new Set(cardsData.map(card => card.id))];
     uniqueIds.forEach(id => {
         const pair = cardsData.filter(card => card.id === id);
+        // Füge den Begriff und die Definition hinzu
         selectedCards.push(pair[0], pair[1]);
     });
     // 2. Mische die ausgewählten Karten
     cards = selectedCards.sort(() => 0.5 - Math.random());
-    // 3. Konsistenzprüfung: Stelle sicher, dass pro Paar nur ein Begriff und eine Definition im Spiel sind
-    const termCount = {};
-    const definitionCount = {};
-    cards.forEach(card => {
-        if (card.type === "term") {
-            termCount[card.id] = (termCount[card.id] || 0) + 1;
-        } else {
-            definitionCount[card.id] = (definitionCount[card.id] || 0) + 1;
-        }
-    });
-    // Überprüfe, ob pro Paar genau ein Begriff und eine Definition im Spiel sind
-    for (const id in termCount) {
-        if (termCount[id] !== 1 || definitionCount[id] !== 1) {
-            console.error(`Fehler: Paar mit ID ${id} hat ${termCount[id]} Begriffe und ${definitionCount[id]} Definitionen.`);
-        }
-    }
-    // 4. Erstelle die Karten-Elemente
+    // 3. Erstelle die Karten-Elemente
     cards.forEach(card => {
         const cardElement = document.createElement("div");
         cardElement.className = "card";
