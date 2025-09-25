@@ -78,7 +78,9 @@ function flipCard() {
 // Übereinstimmung prüfen
 function checkMatch() {
     const [first, second] = flippedCards;
-    if (first.card.id === second.card.id) {
+    // Prüfe, ob die IDs übereinstimmen UND eine Karte ein Begriff, die andere eine Definition ist
+    if (first.card.id === second.card.id &&
+        first.card.type !== second.card.type) {
         first.card.matched = true;
         second.card.matched = true;
         flippedCards = [];
@@ -98,6 +100,7 @@ function checkMatch() {
         }, 1000);
     }
 }
+
 
 // Spiel starten
 startButton.addEventListener("click", () => {
