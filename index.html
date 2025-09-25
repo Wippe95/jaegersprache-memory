@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jägersprache-Memory</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #teamname { padding: 8px; margin: 10px; }
+        #start { padding: 8px; margin: 10px; }
+        #memory { display: flex; flex-wrap: wrap; justify-content: center; margin: 20px; }
+        .card { width: 100px; height: 100px; margin: 10px; background: #ddd; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .card.flipped { background: #fff; }
+        #counter { font-size: 20px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Jägersprache-Memory</h1>
+    <div>
+        <input type="text" id="teamname" placeholder="Teamname eingeben">
+        <button id="start">Start</button>
+    </div>
+    <div id="counter">Versuche: 0</div>
+    <div id="memory"></div>
+    <script src="script.js"></script>
+</body>
+</html>
