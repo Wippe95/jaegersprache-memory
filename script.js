@@ -1,23 +1,30 @@
 // Memory-Karten-Daten (Beispiel)
 const cardsData = [
-    { term: "Brunftkugeln", definition: "Hoden des Schalenwildes" },
-    { term: "Kessel", definition: "Wohnhöhle z.B. im Fuchsbau" },
-    { term: "Pirsch", definition: "Lautloses Anschleichen" },
-    { term: "Pennen", definition: "Federn beim Falken" },
-    { term: "zerwirken", definition: "Zerlegen des Wildkörpers in küchenfertige Teile" },
-    { term: "Schweiß", definition: "Blut von Wild & Hund, sobald es aus Körper austritt" },
-    { term: "Überläufer", definition: "Wildschwein im 2. Lebensjahr" },
-    { term: "ein Stück Schwarzwild", definition: "ein Wildschwein" },
-    { term: "Luder", definition: "Aas, mit dem Jäger Raubtiere anlocken" },
-    { term: "Rammelzeit", definition: "Paarungszeit von Kaninchen und Hasen" },
-    { term: "Schmalspießer", definition: "männliches Reh im 2. Lebensjahr" },
-    { term: "Kirrung", definition: "Futterstelle zur Wildbeobachtung" },
-    { term: "Grimbart", definition: "Alter Name für Dachs" },
-    { term: "Jagdkanzel", definition: "Hochsitz" },
-    { term: "Packer", definition: "Hund, der zum Packen von Wildschweinen geeignet ist" },
-    { term: "Schalen", definition: "Klauen von Paarhufern" },
-    ];
-
+     { id: 1, type: "term", value: "Brunftkugeln" },
+     { id: 1, type: "definition", value: "Hoden des Schalenwildes" },
+     {id: 2, type: "term", value: "Kessel"},
+     {id: 2, type: "definition", value: "Wohnhöhle z.B. im Fuchsbau" },
+     {id: 3, type: "term", value: "Schweiß"},
+     {id: 3, type: "definition", value: "Blut von Wild, sobald es aus Körper austritt"},
+     {id: 4, type: "term", value: "Überläufer"},
+     {id: 4, type: "definition", value:  "Wildschwein im 2. Lebensjahr" },
+     {id: 5, type: "term", value: "ein Stück Schwarzwild"},
+     {id: 5, type: "definition", value: "ein Wildschwein" },
+     {id: 6, type: "term", value: "Luder"},
+     {id: 6, type: "definition", value: "Aas, mit dem Jäger Raubtiere anlocken" },
+     {id: 7, type: "term", value: "Rammelzeit"},
+     {id: 7, type: "definition", value: "Paarungszeit von Kaninchen und Hasen" },
+     {id: 8, type: "term", value: "Schmalspießer"},
+     {id: 8, type: "definition", value: "männliches Reh im 2. Lebensjahr" },
+     {id: 9, type: "term", value: "Kirrung"},
+     {id: 9, type: "definition", value: "Futterstelle zur Wildbeobachtung" },
+     {id: 10, type: "term", value: "Grimbart"},
+     {id: 10, type: "definition", value: "Alter Name für Dachs" },
+     {id: 11, type: "term", value: "Jagdkanzel"},
+     {id: 11, type: "definition", value: "Hochsitz" },
+     { id: 13, type: "term", value: "Schalen" },
+     { id: 13, type: "definition", value: "Klauen von Paarhufern" },
+];
 // Globale Variablen
 let cards = [];
 let flippedCards = [];
@@ -59,7 +66,7 @@ function flipCard() {
     const cardId = parseInt(this.dataset.id);
     const card = cards.find(card => card.id === cardId);
 
-    this.textContent = card.term;
+    this.textContent = card.value;
     this.classList.add("flipped");
     flippedCards.push({ element: this, card });
 
@@ -73,7 +80,7 @@ function flipCard() {
 // Übereinstimmung prüfen
 function checkMatch() {
     const [first, second] = flippedCards;
-    if (first.card.term === second.card.term) {
+    if (first.card.id === second.card.id) {
         first.card.matched = true;
         second.card.matched = true;
         flippedCards = [];
