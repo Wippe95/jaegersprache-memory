@@ -127,7 +127,7 @@ function checkMatch() {
         // Prüfe ob alle Karten gematcht wurden
         if (cards.every(card => card.matched)) {
             setTimeout(() => {
-                alert(`Glückwunsch, ${teamName}! Du hast gewonnen!`);
+                alert(`Glückwunsch, ${teamName}! Du hast ${attempts} Versuche benötigt!`);
                 sendToGoogleSheet();
             }, 500);
         }
