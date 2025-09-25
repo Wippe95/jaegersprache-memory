@@ -41,58 +41,90 @@ const startButton = document.getElementById("start");
 // Memory-Karten erstellen (angepasst)
 function createCards() {
     memory.innerHTML = "";
-    // 1. Erstelle ein Array mit genau einem Begriff und einer Definition pro Paar
-    const selectedCards = [];
-    const uniqueIds = [...new Set(cardsData.map(card => card.id))];
-    uniqueIds.forEach(id => {
-        const pair = cardsData.filter(card => card.id === id);
-        // Füge den Begriff und die Definition hinzu
-        selectedCards.push(pair[0], pair[1]);
+    
+    // Kartenpaare erstellen und mischen
+    cards = [];
+    
+    // Zuerst Paare erstellen
+    const cardPairs = [];
+    const usedIds = new Set();
+    
+    cardsData.forEach(card => {
+        if (!usedIds.has(card.id)) {
+            usedIds.add(card.id);
+            const termCard = cardsData.find(c => c.id === card.id && c.type === "term");
+            const definitionCard = cardsData.find(c => c.id === card.id && c.type === "definition");
+            
+            if (termCard && definitionCard) {
+                cardPairs.push([
+                    { ...termCard, pairId: card.id },
+                    { ...definitionCard, pairId: card.id }
+                ]);
+            }
+        }
     });
-    // 2. Mische die ausgewählten Karten
-    cards = selectedCards.sort(() => 0.5 - Math.random());
-    // 3. Erstelle die Karten-Elemente
+    
+    // Paare mischen und dann Karten einzeln mischen
+    const shuffledPairs = cardPairs.sort(() => 0.5 - Math.random());
+    
+    shuffledPairs.forEach(pair => {
+        // Jedes Paar einzeln mischen, damit Term und Definition nicht immer zusammen bleiben
+        const shuffledPair = pair.sort(() => 0.5 - Math.random());
+        cards.push(...shuffledPair.map(card => ({
+            ...card,
+            matched: false
+        })));
+    });
+    
+    // Finales Mischen aller Karten
+    cards = cards.sort(() => 0.5 - Math.random());
+    
+    // Karten im DOM erstellen
     cards.forEach(card => {
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.dataset.id = card.id;
         cardElement.dataset.type = card.type;
+        cardElement.dataset.pairId = card.pairId;
         cardElement.addEventListener("click", flipCard);
         memory.appendChild(cardElement);
     });
 }
 
-
-
 // Karte umdrehen
 function flipCard() {
     if (!gameStarted || this.classList.contains("flipped") || flippedCards.length >= 2) return;
-
+    
     const cardId = parseInt(this.dataset.id);
-    const card = cards.find(card => card.id === cardId);
-
+    const pairId = parseInt(this.dataset.pairId);
+    const cardType = this.dataset.type;
+    
+    const card = cards.find(c => c.id === cardId && c.type === cardType && c.pairId === pairId);
+    
     this.textContent = card.value;
     this.classList.add("flipped");
     flippedCards.push({ element: this, card });
-
+    
     if (flippedCards.length === 2) {
         attempts++;
         counter.textContent = `Versuche: ${attempts}`;
         checkMatch();
     }
 }
-
 // Übereinstimmung prüfen
 function checkMatch() {
     const [first, second] = flippedCards;
-    if (
-        first.card.id === second.card.id &&
-        ((first.card.type === "term" && second.card.type === "definition") ||
-         (first.card.type === "definition" && second.card.type === "term"))
-    ) {
+    
+    // Prüfe, ob die pairIds übereinstimmen UND eine Karte ein Begriff, die andere eine Definition ist
+    if (first.card.pairId === second.card.pairId && 
+        first.card.type !== second.card.type) {
+        
+        // Match gefunden!
         first.card.matched = true;
         second.card.matched = true;
         flippedCards = [];
+        
+        // Prüfe ob alle Karten gematcht wurden
         if (cards.every(card => card.matched)) {
             setTimeout(() => {
                 alert(`Glückwunsch, ${teamName}! Du hast gewonnen!`);
@@ -100,6 +132,7 @@ function checkMatch() {
             }, 500);
         }
     } else {
+        // Kein Match - Karten wieder umdrehen
         setTimeout(() => {
             first.element.textContent = "";
             second.element.textContent = "";
