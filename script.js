@@ -41,21 +41,12 @@ const startButton = document.getElementById("start");
 // Memory-Karten erstellen
 function createCards() {
     memory.innerHTML = "";
-     cards = [...cardsData]
+    cards = [...cardsData]
         .sort(() => 0.5 - Math.random())
         .map(card => ({
             ...card,
             matched: false
         }));
-
-    cards.forEach(card => {
-        const cardElement = document.createElement("div");
-        cardElement.className = "card";
-        cardElement.dataset.id = card.id; // Wichtig: Verwende card.id, nicht index!
-        cardElement.addEventListener("click", flipCard);
-        memory.appendChild(cardElement);
-    });
-}
 
     cards.forEach(card => {
         const cardElement = document.createElement("div");
