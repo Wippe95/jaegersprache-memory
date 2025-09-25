@@ -1,9 +1,7 @@
 // Memory-Karten-Daten (Beispiel)
 const cardsData = [
      { id: 1, type: "term", value: "Brunftkugeln" },
-     { id: 1, type: "definition", value: "Hoden des Schalenwildes" },
-     {id: 2, type: "term", value: "Kessel"},
-     {id: 2, type: "definition", value: "Wohnhöhle z.B. im Fuchsbau" },
+     { id: 1, type: "definition", value: "Hoden von Paarhufern" },
      {id: 3, type: "term", value: "Schweiß"},
      {id: 3, type: "definition", value: "Blut von Wild, sobald es aus Körper austritt"},
      {id: 4, type: "term", value: "Überläufer"},
@@ -16,14 +14,10 @@ const cardsData = [
      {id: 7, type: "definition", value: "Paarungszeit von Kaninchen und Hasen" },
      {id: 8, type: "term", value: "Schmalspießer"},
      {id: 8, type: "definition", value: "männliches Reh im 2. Lebensjahr" },
-     {id: 9, type: "term", value: "Kirrung"},
-     {id: 9, type: "definition", value: "Futterstelle zur Wildbeobachtung" },
      {id: 10, type: "term", value: "Grimbart"},
      {id: 10, type: "definition", value: "Alter Name für Dachs" },
      {id: 11, type: "term", value: "Jagdkanzel"},
      {id: 11, type: "definition", value: "Hochsitz" },
-     { id: 13, type: "term", value: "Schalen" },
-     { id: 13, type: "definition", value: "Klauen von Paarhufern" },
 ];
 // Globale Variablen
 let cards = [];
