@@ -50,14 +50,20 @@ function createCards() {
     });
     // 2. Mische die Paare
     pairs.sort(() => 0.5 - Math.random());
-    // 3. Flache die Paare zu einem Array und mische die Reihenfolge der Karten
-    cards = pairs.flat().sort(() => 0.5 - Math.random());
-    // 4. Erstelle die Karten-Elemente
+    // 3. Erstelle die Karten-Elemente, aber nur ein Begriff und eine Definition pro Paar
+    cards = [];
+    pairs.forEach(pair => {
+        // Füge den Begriff und die Definition als separate Karten hinzu
+        cards.push(pair[0], pair[1]);
+    });
+    // 4. Mische die Karten
+    cards.sort(() => 0.5 - Math.random());
+    // 5. Erstelle die Karten-Elemente
     cards.forEach(card => {
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.dataset.id = card.id;
-        cardElement.dataset.type = card.type; // Füge den Typ als Attribut hinzu
+        cardElement.dataset.type = card.type;
         cardElement.addEventListener("click", flipCard);
         memory.appendChild(cardElement);
     });
