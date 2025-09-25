@@ -38,24 +38,31 @@ const counter = document.getElementById("counter");
 const teamnameInput = document.getElementById("teamname");
 const startButton = document.getElementById("start");
 
-// Memory-Karten erstellen
+// Memory-Karten erstellen (angepasst)
 function createCards() {
     memory.innerHTML = "";
-    cards = [...cardsData]
-        .sort(() => 0.5 - Math.random())
-        .map(card => ({
-            ...card,
-            matched: false
-        }));
-
+    // 1. Gruppiere Karten nach ID (Begriff + Definition)
+    const pairs = [];
+    const uniqueIds = [...new Set(cardsData.map(card => card.id))];
+    uniqueIds.forEach(id => {
+        const pair = cardsData.filter(card => card.id === id);
+        pairs.push(pair);
+    });
+    // 2. Mische die Paare
+    pairs.sort(() => 0.5 - Math.random());
+    // 3. Flache die Paare zu einem Array und mische die Reihenfolge der Karten
+    cards = pairs.flat().sort(() => 0.5 - Math.random());
+    // 4. Erstelle die Karten-Elemente
     cards.forEach(card => {
         const cardElement = document.createElement("div");
         cardElement.className = "card";
         cardElement.dataset.id = card.id;
+        cardElement.dataset.type = card.type; // Füge den Typ als Attribut hinzu
         cardElement.addEventListener("click", flipCard);
         memory.appendChild(cardElement);
     });
 }
+
 
 // Karte umdrehen
 function flipCard() {
@@ -78,9 +85,11 @@ function flipCard() {
 // Übereinstimmung prüfen
 function checkMatch() {
     const [first, second] = flippedCards;
-    // Prüfe, ob die IDs übereinstimmen UND eine Karte ein Begriff, die andere eine Definition ist
-    if (first.card.id === second.card.id &&
-        first.card.type !== second.card.type) {
+    if (
+        first.card.id === second.card.id &&
+        ((first.card.type === "term" && second.card.type === "definition") ||
+         (first.card.type === "definition" && second.card.type === "term"))
+    ) {
         first.card.matched = true;
         second.card.matched = true;
         flippedCards = [];
@@ -100,6 +109,7 @@ function checkMatch() {
         }, 1000);
     }
 }
+
 
 
 // Spiel starten
