@@ -133,7 +133,7 @@ function checkMatch() {
             first.element.classList.remove("flipped");
             second.element.classList.remove("flipped");
             flippedCards = [];
-        }, 3000);
+        }, 2500);
     }
 }
 
