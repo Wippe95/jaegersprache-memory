@@ -121,7 +121,18 @@ function checkMatch() {
         // Prüfe ob alle Karten gematcht wurden
         if (cards.every(card => card.matched)) {
             setTimeout(() => {
-                alert(`Glückwunsch, ${teamName}! Du hast ${attempts} Versuche benötigt :)`);
+        let message;
+        if (attempts < 21) {
+            message = `Wow, du hast nur ${attempts} Versuche benötigt. :) Hier kommst du direkt zur nächsten Station: KOS.`;
+        } else if (attempts >= 21 && attempts <= 30) {
+            message = `Glückwunsch, du hast ${attempts} Versuche benötigt. Wie heißt der Fuchs in der Fabelwelt? Schreibe die Antwort per SMS an 0123 und du erhälst deine neuen Koordinaten.`;
+        } else if (attempts >= 31 && attempts <= 40) {
+            message = `Da ist noch Luft nach oben, aber merkste selbst, oder? Angenommen, es ist 18:29 Uhr. Wie viele Minuten sind es bis Mitternacht? Schreibe die Antwort per SMS an 0123 und du erhälst den nächsten Hinweis.`;
+        } else {
+            message = `Das geht besser, probier's nochmal!`;
+        }
+
+        alert(message);
                 sendToGoogleSheet();
             }, 500);
         }
